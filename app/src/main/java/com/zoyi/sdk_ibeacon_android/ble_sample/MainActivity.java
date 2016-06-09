@@ -15,14 +15,34 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
   private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
+
+  private Button buttonStart, buttonStop;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    buttonStart = (Button)findViewById(R.id.button1);
+    buttonStop = (Button)findViewById(R.id.button2);
+
+    buttonStart.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        MyApp.start();
+      }
+    });
+
+    buttonStop.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        MyApp.stop();
+      }
+    });
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
       if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.zoyi.sdk_ibeacon_android.ble_sample"
-        minSdkVersion 18
+        minSdkVersion 10
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -27,5 +27,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
-    compile 'com.github.zoyi:sdk-ibeacon-android:0.1.3'
+    compile 'com.github.zoyi:sdk-ibeacon-android:0.1.4'
 }
