@@ -20,22 +20,45 @@ public class MyApp extends Application {
     int brandId = 0; // your brand id
 
     manager = new ZBeaconManager(this, email, token, brandId);
-    manager.setDebugMode(true);
+    // if you want to see logs.
+    // manager.setDebugMode(true);
 
-    // you must save variable for check auto start scanning
-    // if user turn off scanning,
-    // you must set some variable to local settings and check here by it.
+    // you MUST set customer id for send signal.
+    String deviceId = Settings.Secure.getString(
+        getApplicationContext().getContentResolver(),
+        Settings.Secure.ANDROID_ID);
+    String customerId = hmacDigest(deviceId + "YOUR_SALT", "YOUR_KEY_FOR_HMAC", "HmacSHA512");
 
-    // DO NOT USE variable like this sample. it doesn't save when app is restar.
-    // YOU MUST save it to local storage like 'SharedPreferences'.
-
-    if (autoStart) {
-      manager.start();
+    if (customerId != null) {
+      Log.i("CustomerId", customerId);
+      manager.setCustomerId(customerId);
     }
 
-    // If you want to know android id or package id
-    String androidId = manager.getDeviceId();
-    String packageId = manager.getPackageId();
+    // You must start manager manually.
+    manager.start();
+  }
+  
+  private static String hmacDigest(String msg, String keyString, String algo) {
+    String digest = null;
+    try {
+      SecretKeySpec key = new SecretKeySpec((keyString).getBytes("UTF-8"), algo);
+      Mac mac = Mac.getInstance(algo);
+      mac.init(key);
+      byte[] bytes = mac.doFinal(msg.getBytes("ASCII"));
+      StringBuffer hash = new StringBuffer();
+      for (int i = 0; i < bytes.length; i++) {
+        String hex = Integer.toHexString(0xFF & bytes[i]);
+        if (hex.length() == 1) {
+          hash.append('0');
+        }
+        hash.append(hex);
+      }
+      digest = hash.toString();
+    } catch (UnsupportedEncodingException e) {
+    } catch (InvalidKeyException e) {
+    } catch (NoSuchAlgorithmException e) {
+    }
+    return digest;
   }
 
   public static void start() {
