@@ -1,8 +1,16 @@
 package com.zoyi.sdk_ibeacon_android.ble_sample;
 
 import android.app.Application;
+import android.provider.Settings;
 import android.util.Log;
+import com.zoyi.sdk_ibeacon_android.lib.Target;
 import com.zoyi.sdk_ibeacon_android.lib.ZBeaconManager;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by mika on 2016. 6. 2..
@@ -19,7 +27,8 @@ public class MyApp extends Application {
     String token = "yourToken";
     int brandId = 0; // your brand id
 
-    manager = new ZBeaconManager(this, email, token, brandId);
+    manager = new ZBeaconManager(this, email, token, brandId, Target.DEVELOPMENT);
+    manager.setDebugMode(true);
     // if you want to see logs.
     // manager.setDebugMode(true);
 
