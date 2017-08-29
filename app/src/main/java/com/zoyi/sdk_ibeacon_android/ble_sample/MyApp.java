@@ -2,6 +2,7 @@ package com.zoyi.sdk_ibeacon_android.ble_sample;
 
 import android.app.Application;
 import android.provider.Settings;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 import com.zoyi.sdk_ibeacon_android.lib.Target;
 import com.zoyi.sdk_ibeacon_android.lib.ZBeaconManager;
@@ -15,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Created by mika on 2016. 6. 2..
  */
-public class MyApp extends Application {
+public class MyApp extends MultiDexApplication {
   static ZBeaconManager manager;
   static boolean autoStart = true;
 
@@ -25,9 +26,8 @@ public class MyApp extends Application {
 
     String email = "your@email.com";
     String token = "yourToken";
-    int brandId = 0; // your brand id
 
-    manager = new ZBeaconManager(this, email, token, brandId, Target.DEVELOPMENT);
+    manager = new ZBeaconManager(this, email, token, Target.DEVELOPMENT);
     // *** Target: PRODUCTION | DEVELOPMENT ***
     // *** if you want to send data to dev server, init with Target.DEVELOPMENT ***
 
