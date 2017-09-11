@@ -27,11 +27,12 @@ public class MyApp extends MultiDexApplication {
     String email = "your@email.com";
     String token = "yourToken";
 
-    manager = new ZBeaconManager(this, email, token, Target.DEVELOPMENT);
+    ZBeaconManager.setDebugMode(true);
+
+    ZBeaconManager.init(this, email, token, Target.DEVELOPMENT);
     // *** Target: PRODUCTION | DEVELOPMENT ***
     // *** if you want to send data to dev server, init with Target.DEVELOPMENT ***
 
-    manager.setDebugMode(true);
     // if you want to see logs.
     // manager.setDebugMode(true);
 
@@ -43,11 +44,11 @@ public class MyApp extends MultiDexApplication {
 
     if (customerId != null) {
       Log.i("CustomerId", customerId);
-      manager.setCustomerId(customerId);
+      ZBeaconManager.setCustomerId(customerId);
     }
 
     // You must start manager manually.
-    manager.start();
+    ZBeaconManager.start();
   }
   
   private static String hmacDigest(String msg, String keyString, String algo) {
