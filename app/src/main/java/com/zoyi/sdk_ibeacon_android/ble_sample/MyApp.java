@@ -1,6 +1,5 @@
 package com.zoyi.sdk_ibeacon_android.ble_sample;
 
-import android.app.Application;
 import android.provider.Settings;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
@@ -27,14 +26,14 @@ public class MyApp extends MultiDexApplication {
     String email = "your@email.com";
     String token = "yourToken";
 
-    ZBeaconManager.setDebugMode(true);
+    ZBeaconManager.init(this, email, token);
 
-    ZBeaconManager.init(this, email, token, Target.DEVELOPMENT);
+//    ZBeaconManager.init(this, email, token, Target.DEVELOPMENT);
     // *** Target: PRODUCTION | DEVELOPMENT ***
     // *** if you want to send data to dev server, init with Target.DEVELOPMENT ***
 
     // if you want to see logs.
-    // manager.setDebugMode(true);
+    ZBeaconManager.setDebugMode(true);
 
     // you MUST set customer id for send signal.
     String deviceId = Settings.Secure.getString(
@@ -47,7 +46,7 @@ public class MyApp extends MultiDexApplication {
       ZBeaconManager.setCustomerId(customerId);
     }
 
-    // You must start manager manually.
+    // You must start manager manually. onCreate called when reboot.
     ZBeaconManager.start();
   }
   
@@ -75,10 +74,10 @@ public class MyApp extends MultiDexApplication {
   }
 
   public static void start() {
-    manager.start();
+    ZBeaconManager.start();
   }
 
   public static void stop() {
-    manager.stop();
+    ZBeaconManager.stop();
   }
 }
